@@ -1,10 +1,10 @@
 # KART RUSH — FOREST RACING PARK
 
-HTML / CSS / Vanilla JavaScript / Three.js로 만든 6인 3D 아케이드 카트 레이싱 게임입니다. 별도 설치나 빌드 없이 플레이할 수 있습니다.
+HTML / CSS / Vanilla JavaScript / Three.js로 만든 6인 3D 아케이드 카트 레이싱 게임입니다. 공개 사이트에서는 온라인 명예의 전당을 함께 사용합니다.
 
 온라인 플레이: [apex-evergreen-kart.netlify.app](https://apex-evergreen-kart.netlify.app/) · [GitHub 소스](https://github.com/reiner5427-eng/kart-racing)
 
-Netlify는 `netlify.toml`의 `node scripts/build.cjs`로 정적 파일 3개를 `dist/`에 준비합니다. 현재 공개 사이트는 연결된 Netlify 프로젝트에 업로드 배포했으며, GitHub 푸시만으로 자동 배포되지는 않습니다.
+Netlify는 `netlify.toml`의 `node scripts/build.cjs`로 정적 파일 3개를 `dist/`에 준비하고 `netlify/functions/leaderboard.mts`를 서버 함수로 배포합니다. 현재 공개 사이트는 연결된 Netlify 프로젝트에 업로드 배포했으며, GitHub 푸시만으로 자동 배포되지는 않습니다.
 
 ## 실행
 
@@ -12,7 +12,7 @@ Netlify는 `netlify.toml`의 `node scripts/build.cjs`로 정적 파일 3개를 `
 2. Three.js CDN 및 웹 폰트를 읽기 위해 인터넷 연결이 필요합니다. 폰트 연결이 안 되면 시스템 폰트로 대체합니다. Three.js는 jsDelivr 실패 시 unpkg로 재시도합니다.
 3. 로컬 서버를 선호하면 Node.js가 있는 환경에서 `node server.cjs` 실행 후 `http://127.0.0.1:4173`에 접속합니다. 패키지 설치는 필요 없습니다.
 
-같은 브라우저와 같은 주소로 실행해야 기존 명예의 전당 기록을 볼 수 있습니다. `file://`의 저장 정책은 브라우저마다 다르므로 장기간 기록 보관에는 로컬 서버 주소를 권장합니다. 데스크톱은 키보드, 모바일은 화면의 터치 조작 패드로 플레이할 수 있습니다.
+`index.html` 직접 실행이나 `server.cjs` 사용 시 온라인 API가 없으므로 이 기기의 `localStorage` 기록을 표시합니다. 모든 기기가 공유하는 명예의 전당은 위 Netlify 공개 사이트에서 이용할 수 있습니다. 데스크톱은 키보드, 모바일은 화면의 터치 조작 패드로 플레이할 수 있습니다.
 
 ## 플레이 흐름
 
@@ -92,13 +92,15 @@ Shift와 조향을 유지하면 횡그립이 낮아지며 차체 방향과 이�
 
 ## 명예의 전당 / 저장
 
-3랩 정상 완주자만 등록합니다. 레이스 순위와 별개로 **BEST LAP 오름차순** TOP 10을 유지합니다.
+3랩 정상 완주자만 등록합니다. 레이스 순위와 별개로 **BEST LAP 오름차순** TOP 10을 유지합니다. Netlify 사이트에서는 `/api/leaderboard` 함수가 기록을 검증하여 Netlify Blobs의 사이트 전체 저장소에 보관합니다. 다른 기기에서 같은 사이트를 열면 동일한 순위를 볼 수 있습니다. 등록된 플레이어 이름과 기록은 모든 방문자에게 공개됩니다.
 
-localStorage 키: `kartRushHallOfFame`
+브라우저 백업용 localStorage 키: `kartRushHallOfFame`
 
 각 항목: `id`, `playerName`, `characterId`, `characterName`, `bestLapTime`, `totalTime`, `mode`, `date`, `lapTimes` (시간은 숫자 밀리초).
 
-저장된 JSON 파싱·쓰기 오류를 처리하고, 잘못된 형식의 항목은 무시합니다. 같은 레이스의 중복 등록을 막습니다. 기본적으로 같은 이름의 여러 기록을 허용합니다. 새 기록에 강조 효과, 1위 기록에 축하 파티클을 표시합니다. 기록 초기화에는 확인 창이 필요합니다. 서버 계정이나 온라인 순위표가 아니므로 다른 기기와 기록을 공유하지 않습니다.
+저장된 JSON 파싱·쓰기 오류를 처리하고, 잘못된 형식의 항목은 무시합니다. 같은 레이스의 중복 등록을 막습니다. 기본적으로 같은 이름의 여러 기록을 허용합니다. 새 기록에 강조 효과, 1위 기록에 축하 파티클을 표시합니다. 온라인 저장이 실패하면 이 기기의 백업을 표시하고 등록 재시도 버튼을 제공합니다. `이 기기 기록 삭제`는 확인 후 로컬 백업만 지우며 온라인 순위는 지우지 않습니다. 이전 버전에서 만든 로컬 기록은 온라인에 자동 게시되지 않습니다.
+
+서버는 이름·캐릭터·모드·3랩 시간과 합계를 검증합니다. 계정 및 서버 권위형 레이스 검증이 없으므로 고의로 조작한 요청까지 완전히 차단하는 경쟁용 순위 시스템은 아닙니다.
 
 ## CONFIG 조절
 
@@ -110,7 +112,7 @@ localStorage 키: `kartRushHallOfFame`
 - `item`: respawnTime(밀리초), shieldDuration(밀리초), missileSpeed
 - `item.weightsFront / weightsBack`: 로켓·물폭탄·트랩·실드·부스터 순서의 상대 가중치
 - `leaderboard.maxEntries`: 기본 10
-- `leaderboard.keepBestOnly`: true이면 동일 이름·모드의 최고 기록만 유지
+- `leaderboard.keepBestOnly`: true이면 이 기기의 백업에서 동일 이름·모드의 최고 기록만 유지. 온라인 기록은 동일 이름을 허용하고 BEST LAP TOP 10으로 정렬
 
 경기는 6명·3랩으로 구성되어 있으며 HUD와 기록 등록 조건도 이에 맞춰져 있습니다. 인원·랩 수를 바꾸려면 해당 UI와 검증 조건도 함께 수정해야 합니다.
 
@@ -120,6 +122,9 @@ localStorage 키: `kartRushHallOfFame`
 - `style.css`: 메뉴·레이스 HUD·기록실
 - `game.js`: 모델, 서킷, 물리, AI, 아이템, 상태 및 기록 시스템
 - `server.cjs`: 선택 사항인 로컬 정적 서버
+- `netlify/functions/leaderboard.mts`: 온라인 기록 읽기·등록 API
+- `netlify/functions/_shared/records.mts`: 기록 검증 및 정렬
+- `package.json`, `pnpm-lock.yaml`: 서버 함수 의존성. 로컬 정적 실행에는 설치 불필요
 - `smoke-test.cjs`, `integration-test.cjs`: 개발 환경의 Playwright 테스트. 게임 실행에는 필요 없음. 테스트 파일의 Playwright 경로는 이 작업 환경 기준입니다.
 - `mobile-test.cjs`: 휴대폰 크기의 브라우저에서 실제 다중 터치 입력·드리프트·일시정지를 확인합니다.
 

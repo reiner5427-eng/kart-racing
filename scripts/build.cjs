@@ -1,5 +1,5 @@
 'use strict';
-// Publish only the three browser assets. No package installation is required.
+// Browser assets are static; Netlify bundles the separate leaderboard function.
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');

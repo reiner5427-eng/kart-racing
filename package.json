@@ -1,0 +1,15 @@
+{
+  "name": "kart-rush",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.2"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.0.1",
+    "typescript": "^5.9.3"
+  }
+}
