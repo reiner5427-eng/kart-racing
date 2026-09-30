@@ -2,6 +2,14 @@
 
 직접 제작한 저폴리곤 숲 서킷에서 즐기는 3D 아케이드 카트 레이싱 프로토타입입니다. 참고 이미지에서는 후방 추적 카메라와 HUD 배치만 참고했습니다. 캐릭터, 차량, 환경, 로고, UI, 이펙트와 소리는 자체 제작했습니다.
 
+## 온라인 플레이 및 배포
+
+- 게임: [apex-evergreen-kart.netlify.app](https://apex-evergreen-kart.netlify.app/)
+- 소스: [reiner5427-eng/kart-racing](https://github.com/reiner5427-eng/kart-racing)
+- 현재 프로덕션은 Netlify Drop으로 직접 배포했습니다. GitHub 자동 배포는 아직 연결되지 않았습니다.
+- 다시 배포하려면 `node scripts/build.cjs`를 실행하고 `dist/` 폴더를 Netlify 프로젝트에 업로드합니다.
+- 저장소 연결 후에는 `netlify.toml`의 빌드 명령과 배포 폴더(`dist`)를 사용할 수 있습니다.
+
 ## 실행
 
 1. `index.html`을 Chrome 또는 Edge에서 엽니다. 파일을 더블클릭해서 실행할 수 있습니다.
