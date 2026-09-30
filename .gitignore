@@ -7,3 +7,5 @@ preview-*.png
 QA-results.json
 .deploy/
 dist/
+.publish/
+test-*.png

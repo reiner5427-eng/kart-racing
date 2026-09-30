@@ -2,6 +2,10 @@
 
 HTML / CSS / Vanilla JavaScript / Three.js로 만든 6인 3D 아케이드 카트 레이싱 게임입니다. 별도 설치나 빌드 없이 플레이할 수 있습니다.
 
+온라인 플레이: [apex-evergreen-kart.netlify.app](https://apex-evergreen-kart.netlify.app/) · [GitHub 소스](https://github.com/reiner5427-eng/kart-racing)
+
+Netlify는 `netlify.toml`의 `node scripts/build.cjs`로 정적 파일 3개를 `dist/`에 준비합니다. 현재 공개 사이트는 연결된 Netlify 프로젝트에 업로드 배포했으며, GitHub 푸시만으로 자동 배포되지는 않습니다.
+
 ## 실행
 
 1. `index.html`을 Chrome 또는 Edge로 엽니다.
