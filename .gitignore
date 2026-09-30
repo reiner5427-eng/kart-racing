@@ -1,0 +1,9 @@
+.netlify/
+node_modules/
+.env
+.env.*
+!.env.example
+preview-*.png
+QA-results.json
+.deploy/
+dist/

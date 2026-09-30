@@ -1,0 +1,1016 @@
+:root {
+  color-scheme:dark;
+  font-family:Inter,"Segoe UI",sans-serif;
+  color:#fff;
+  background:#1b202c}
+* {
+  box-sizing:border-box}
+body {
+  margin:0;
+  overflow:hidden}
+.game {
+  position:relative;
+  height:100dvh;
+  min-height:480px;
+  overflow:hidden;
+  background:#c99079}
+#race {
+  width:100%;
+  height:100%;
+  display:block}
+.vignette {
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,#11182745 0%,transparent 28%,transparent 65%,#11162485 100%)}
+.brand {
+  position:absolute;
+  left:36px;
+  top:26px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  letter-spacing:3px;
+  font-size:21px}
+.brand-icon {
+  font-size:27px;
+  font-style:italic;
+  letter-spacing:-4px;
+  border:2px solid #f5dcae;
+  width:34px;
+  height:36px;
+  text-align:center;
+  line-height:31px;
+  color:#f5dcae;
+  transform:skew(-9deg)}
+.brand-sub {
+  display:block;
+  font-size:7px;
+  letter-spacing:3.7px;
+  margin-top:3px;
+  color:#ede6d0}
+.edition {
+  border-left:1px solid #ffffff38;
+  margin-left:12px;
+  padding-left:22px;
+  font-size:9px;
+  letter-spacing:2px;
+  font-weight:500;
+  color:#ffffffb0}
+.panel {
+  background:#192331bc;
+  border:1px solid #ffffff20;
+  backdrop-filter:blur(14px);
+  box-shadow:0 8px 30px #15192314;
+  border-radius:4px}
+.map-panel {
+  position:absolute;
+  left:36px;
+  top:102px;
+  width:220px;
+  padding:17px 16px 13px}
+.eyebrow {
+  font-size:10px;
+  letter-spacing:2px;
+  font-weight:600;
+  color:#ede7da}
+.live-dot {
+  display:inline-block;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#f4ce85;
+  box-shadow:0 0 10px #f4ce8560;
+  margin-right:8px;
+  vertical-align:middle}
+.map-tag {
+  float:right;
+  color:#c2c3c5;
+  font-size:9px}
+.map-panel canvas {
+  width:100%;
+  height:133px;
+  margin:4px 0}
+.map-footer {
+  display:flex;
+  justify-content:space-between;
+  font-size:9px;
+  letter-spacing:1px;
+  color:#cbcbd0;
+  border-top:1px solid #ffffff15;
+  padding-top:11px}
+.timing {
+  position:absolute;
+  top:34px;
+  right:36px;
+  width:228px;
+  padding:20px 22px}
+.lap-line {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:17px}
+.lap-line b {
+  font-size:39px;
+  font-family:"Barlow Condensed",sans-serif;
+  font-weight:600;
+  line-height:1}
+.lap-line i {
+  font-size:20px;
+  font-style:normal;
+  color:#d3d2cb;
+  font-family:"Barlow Condensed",sans-serif}
+.time-line {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:13px;
+  font-size:9px;
+  letter-spacing:1px;
+  color:#c4c8d0}
+.time-line strong {
+  font-size:15px;
+  font-weight:500;
+  font-variant-numeric:tabular-nums;
+  color:#fff;
+  letter-spacing:1px}
+.best strong {
+  color:#f4ce85;
+  font-size:13px}
+.position-number {
+  font:600 47px "Barlow Condensed",sans-serif;
+  color:#f4ce85}
+.track-name {
+  position:absolute;
+  left:36px;
+  bottom:105px;
+  pointer-events:none}
+.track-name>span {
+  font-size:8px;
+  letter-spacing:2.6px;
+  color:#eee3d1}
+h1 {
+  font-weight:500;
+  letter-spacing:-1.5px;
+  font-size:35px;
+  margin:9px 0}
+h1 span {
+  display:block;
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:1.2px;
+  color:#e3d8cc;
+  margin-top:10px}
+.race-toast {
+  position:absolute;
+  left:50%;
+  top:24%;
+  transform:translateX(-50%);
+  font-size:16px;
+  letter-spacing:2px;
+  font-weight:700;
+  color:#f8dfad;
+  opacity:0;
+  transition:opacity .2s;
+  text-shadow:0 2px 12px #000}
+.speed-panel {
+  position:absolute;
+  right:36px;
+  bottom:101px;
+  width:218px}
+.speed-heading {
+  display:flex;
+  align-items:center;
+  font-size:8px;
+  letter-spacing:1.8px}
+.speed-heading #gear {
+  margin-left:auto;
+  background:#f4ce85;
+  color:#26313b;
+  width:22px;
+  height:25px;
+  text-align:center;
+  padding-top:6px;
+  font-weight:700;
+  font-size:11px;
+  border-radius:2px}
+.speed-number {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  height:101px}
+.speed-number>span:first-child {
+  font:600 104px/1 "Barlow Condensed","Arial Narrow",sans-serif;
+  letter-spacing:-3px;
+  font-variant-numeric:tabular-nums}
+.speed-unit {
+  font-size:11px;
+  line-height:1.6;
+  letter-spacing:2px;
+  color:#e4e1d6;
+  margin-top:29px}
+.speed-bars {
+  display:flex;
+  gap:4px;
+  height:12px;
+  margin:8px 0 21px}
+.speed-bars i {
+  flex:1;
+  background:#ffffff29;
+  transform:skew(-16deg)}
+.speed-bars i.active {
+  background:#f4d398}
+.boost-heading {
+  display:flex;
+  justify-content:space-between;
+  font-size:8px;
+  letter-spacing:2px;
+  margin-bottom:9px;
+  color:#dddcd9}
+.boost-track {
+  height:4px;
+  background:#ffffff29}
+#boostfill {
+  height:100%;
+  width:100%;
+  background:#f4d398;
+  box-shadow:0 0 12px #f4d39840}
+footer {
+  position:absolute;
+  left:36px;
+  right:36px;
+  bottom:22px;
+  display:flex;
+  justify-content:space-between;
+  border-top:1px solid #ffffff25;
+  padding-top:16px;
+  gap:15px}
+.controls {
+  display:flex;
+  align-items:center;
+  gap:20px;
+  font-size:9px;
+  color:#e0ded6}
+.controls>span {
+  white-space:nowrap}
+kbd {
+  font:9px Inter,sans-serif;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #ffffff35;
+  border-radius:3px;
+  min-width:21px;
+  height:22px;
+  margin-right:4px;
+  padding:0 5px;
+  color:#fff;
+  background:#ffffff09}
+.actions {
+  display:flex;
+  gap:16px;
+  align-items:center}
+.actions button {
+  background:none;
+  border:0;
+  color:#e0ded6;
+  font-size:10px;
+  cursor:pointer;
+  white-space:nowrap}
+.actions button:last-child {
+  font-size:24px}
+.actions kbd {
+  margin-left:6px}
+.touch-controls {
+  display:none}
+button:focus-visible {
+  outline:2px solid #f4ce85;
+  outline-offset:5px}
+button:hover {
+  filter:brightness(1.15)}
+
+@media(max-width:900px) {
+  .edition {
+  display:none}
+.brand {
+  left:22px;
+  top:22px}
+.map-panel {
+  left:22px;
+  top:86px;
+  width:170px;
+  padding:12px}
+.map-panel canvas {
+  height:100px}
+.timing {
+  right:22px;
+  top:22px;
+  width:190px;
+  padding:16px}
+.track-name {
+  left:22px;
+  bottom:100px}
+.speed-panel {
+  right:22px;
+  bottom:95px;
+  width:180px}
+.controls {
+  gap:10px;
+  font-size:8px}
+.controls span:nth-child(3) {
+  display:none}
+footer {
+  left:22px;
+  right:22px}
+.actions {
+  gap:6px}
+}
+
+@media(max-width:600px) {
+  .brand {
+  font-size:15px}
+.brand-icon {
+  width:27px;
+  height:29px;
+  font-size:23px;
+  line-height:25px}
+.brand-sub {
+  font-size:6px}
+.map-panel {
+  top:77px;
+  width:136px}
+.map-panel .eyebrow {
+  font-size:7px;
+  letter-spacing:1px}
+.map-panel canvas {
+  height:82px}
+.map-footer {
+  font-size:7px}
+.timing {
+  width:150px;
+  padding:12px}
+.lap-line {
+  margin-bottom:10px}
+.lap-line b {
+  font-size:30px}
+.time-line {
+  font-size:7px;
+  margin-top:9px}
+.time-line strong {
+  font-size:11px}
+.position {
+  margin-top:12px;
+  padding-top:5px}
+.position-number {
+  font-size:32px}
+.position small {
+  font-size:6px}
+.track-name {
+  bottom:147px}
+.track-name>span {
+  font-size:6px}
+h1 {
+  font-size:23px}
+h1 span {
+  font-size:8px}
+.speed-panel {
+  width:132px;
+  bottom:146px}
+.speed-number {
+  height:75px}
+.speed-number>span:first-child {
+  font-size:75px}
+.speed-unit {
+  font-size:8px}
+.speed-heading {
+  font-size:6px;
+  letter-spacing:1px}
+.speed-bars {
+  height:8px;
+  margin-bottom:12px}
+footer {
+  bottom:13px;
+  padding-top:9px}
+.controls {
+  display:none}
+.actions {
+  margin-left:auto}
+.touch-controls {
+  display:flex;
+  position:absolute;
+  bottom:63px;
+  left:22px;
+  right:22px;
+  justify-content:space-between;
+  gap:9px}
+.touch-controls button {
+  border:1px solid #ffffff40;
+  background:#192331aa;
+  color:#f4d398;
+  border-radius:5px;
+  height:48px;
+  flex:1;
+  touch-action:none;
+  font-size:14px}
+.touch-controls button:nth-child(3) {
+  font-size:9px}
+.center-message strong {
+  font-size:21px}
+.center-message {
+  top:44%;
+  width:240px}
+}
+
+
+/* Evergreen Park: a compact, original mint-and-cream racing HUD. */
+[hidden] {
+  display:none!important}
+
+#effects {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none}
+
+.game {
+  background:#a9d5d4;
+  min-height:400px}
+
+.panel {
+  background:#153b38bd;
+  border-color:#e2ffe52b;
+  box-shadow:0 6px 26px #173e3020}
+
+.vignette {
+  background:linear-gradient(180deg,#18383228,transparent 35%,transparent 57%,#0c292a95)}
+
+.position-panel {
+  position:absolute;
+  left:36px;
+  top:325px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-shadow:0 3px 20px #16372880}
+
+.position-number {
+  font-size:70px;
+  line-height:1.15;
+  font-family:Bahnschrift,"Arial Narrow",sans-serif;
+  font-weight:600}
+
+.position-panel b {
+  font-size:22px;
+  font-weight:400;
+  color:#fff9}
+
+.position-panel small {
+  display:block;
+  font-size:8px;
+  letter-spacing:2.2px;
+  margin-top:7px;
+  color:#fffd}
+
+.checkpoint-line {
+  display:flex;
+  justify-content:space-between;
+  padding-top:14px;
+  margin-top:18px;
+  border-top:1px solid #ffffff20;
+  font-size:8px;
+  letter-spacing:1px;
+  color:#b4d5c2}
+
+.track-name {
+  bottom:110px}
+
+.track-name>span {
+  font-size:8px;
+  letter-spacing:2px}
+
+h1 {
+  font-size:30px;
+  color:#f2f0d9}
+h1 span {
+  color:#d7e6d8}
+
+.speed-panel {
+  bottom:105px;
+  width:208px;
+  text-shadow:0 3px 25px #16382f90}
+
+.speed-number>span:first-child {
+  font-family:Bahnschrift,"Arial Narrow",sans-serif;
+  font-weight:600;
+  font-size:94px;
+  letter-spacing:-5px}
+
+.speed-bars i.active {
+  background:#f6dfaf}
+
+.drive-panel {
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:99px;
+  padding:14px 18px 11px;
+  width:264px}
+
+.drive-heading {
+  font-size:8px;
+  letter-spacing:1.3px;
+  display:flex;
+  justify-content:space-between;
+  color:#b6d6c6;
+  margin-bottom:8px}
+
+.drive-heading span:last-child {
+  letter-spacing:.5px;
+  font-size:8px}
+
+.drift-track {
+  height:3px;
+  background:#ffffff20;
+  margin-bottom:14px}
+.drift-track>div {
+  height:100%;
+  width:0;
+  background:#a2e4cf}
+
+.boost-track {
+  height:4px}
+#boostfill {
+  width:0;
+  background:#f4d398}
+
+.boost-inventory {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:10px}
+
+.boost-inventory>span {
+  color:#ffffff30;
+  border:1px solid #ffffff24;
+  width:25px;
+  height:24px;
+  text-align:center;
+  font-size:17px;
+  border-radius:2px}
+
+.boost-inventory>span.charged {
+  background:#f3daa5;
+  border-color:#f3daa5;
+  color:#234c44}
+
+.boost-inventory small {
+  margin-left:auto;
+  font-size:8px;
+  color:#cfddd0}
+.boost-inventory kbd {
+  height:18px;
+  font-size:7px}
+
+.menu {
+  position:absolute;
+  left:50%;
+  top:46%;
+  transform:translate(-50%,-50%);
+  width:370px;
+  padding:30px 31px 23px;
+  background:#123a37eb;
+  border:1px solid #ccf1d441;
+  box-shadow:0 20px 80px #10372b38;
+  z-index:5;
+  border-radius:7px}
+
+.menu>.eyebrow {
+  font-size:8px;
+  letter-spacing:1.7px;
+  color:#bbd3be}
+
+.menu h2 {
+  font-size:30px;
+  line-height:1.4;
+  font-weight:500;
+  letter-spacing:-1.4px;
+  color:#faf1cf;
+  margin:17px 0 13px}
+
+.menu p {
+  font-size:11px;
+  line-height:1.9;
+  color:#ccdaca;
+  margin:0 0 24px}
+
+.mode-buttons {
+  display:flex;
+  flex-direction:column;
+  gap:10px}
+
+.mode-buttons button {
+  cursor:pointer;
+  text-align:left;
+  border:1px solid #cfe8c939;
+  background:#ffffff06;
+  color:#fff;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:15px 16px;
+  transition:background .2s}
+
+.mode-buttons button:first-child {
+  background:#f4dfae;
+  color:#254c44;
+  border-color:#f4dfae}
+
+.mode-buttons button:hover {
+  background:#b1e0c5;
+  color:#224940}
+
+.mode-buttons button>span:last-child {
+  margin-left:auto;
+  font-size:19px}
+
+.mode-icon {
+  font-size:26px}
+.mode-buttons b {
+  display:block;
+  font-size:14px;
+  font-weight:600}
+.mode-buttons small {
+  display:block;
+  font-size:9px;
+  opacity:.65;
+  margin-top:6px}
+
+.menu-note {
+  margin-top:22px;
+  text-align:center;
+  font-size:8px;
+  letter-spacing:.4px;
+  color:#b2cdbb}
+.menu-note span {
+  margin:0 10px}
+
+.countdown {
+  position:absolute;
+  left:50%;
+  top:40%;
+  transform:translate(-50%,-50%);
+  font-family:Bahnschrift,sans-serif;
+  font-size:105px;
+  font-weight:700;
+  color:#fff5ce;
+  pointer-events:none;
+  text-shadow:0 5px 40px #194b3770}
+
+.race-toast {
+  top:30%;
+  font-size:13px;
+  letter-spacing:1px;
+  background:#133c36b3;
+  padding:10px 20px;
+  border-radius:3px;
+  pointer-events:none;
+  white-space:nowrap}
+
+.primary-button,.secondary-button {
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:3px;
+  cursor:pointer;
+  font-size:12px}
+.primary-button {
+  background:#f4dfae;
+  color:#254c44}
+.secondary-button {
+  margin-top:10px;
+  background:#ffffff0b;
+  color:#cedecd}
+
+.result-stats {
+  margin:15px 0 25px}
+.result-stats>div {
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid #ffffff15;
+  padding:13px 0;
+  align-items:center}
+.result-stats span {
+  font-size:8px;
+  letter-spacing:1.4px;
+  color:#bbd1bf}
+.result-stats b {
+  font-size:19px;
+  color:#f4dfae;
+  font-weight:500;
+  font-variant-numeric:tabular-nums}
+
+.item-panel {
+  position:absolute;
+  left:36px;
+  top:437px;
+  padding:13px;
+  width:198px}
+.item-panel .eyebrow {
+  font-size:8px;
+  letter-spacing:1px}
+.item-panel .eyebrow>span {
+  float:right;
+  color:#c4d6c6;
+  font-size:8px;
+  letter-spacing:0}
+.item-panel kbd {
+  height:16px;
+  min-width:17px;
+  font-size:8px}
+
+.item-slots {
+  display:flex;
+  gap:9px;
+  margin-top:12px}
+.item-slots>div {
+  width:79px;
+  height:69px;
+  border:1px solid #ffffff20;
+  border-radius:3px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  color:#ffffff35}
+.item-slots b {
+  font-size:27px;
+  font-weight:400}
+.item-slots small {
+  font-size:8px;
+  letter-spacing:1px}
+.item-slots .filled {
+  color:#f4dfa7;
+  background:#f4dfa712;
+  border-color:#f4dfa74d}
+
+#debug {
+  position:absolute;
+  left:50%;
+  top:15px;
+  transform:translateX(-50%);
+  background:#102e29dc;
+  padding:14px 18px;
+  color:#e2f6d4;
+  font:11px/1.55 monospace;
+  z-index:7;
+  border-radius:4px;
+  pointer-events:none}
+
+.controls {
+  gap:15px}
+.actions button {
+  color:#e1ead8}
+
+@media(min-width:1600px) {
+  .map-panel {
+  width:240px}
+.map-panel canvas {
+  height:150px}
+.position-panel {
+  top:344px}
+.item-panel {
+  top:462px}
+.speed-panel {
+  width:235px}
+.speed-number>span:first-child {
+  font-size:107px}
+.menu {
+  width:410px;
+  padding:34px}
+}
+
+@media(max-width:1100px) {
+  .controls span:nth-child(3),.controls span:last-child {
+  display:none}
+.controls {
+  gap:10px}
+.track-name>span {
+  font-size:6px}
+h1 {
+  font-size:25px}
+.drive-panel {
+  width:240px}
+.speed-panel {
+  width:180px}
+.speed-number>span:first-child {
+  font-size:85px}
+}
+
+@media(max-width:900px) {
+  .position-panel {
+  left:22px;
+  top:265px}
+.position-number {
+  font-size:52px}
+.position-panel b {
+  font-size:18px}
+.item-panel {
+  left:22px;
+  top:359px;
+  width:166px}
+.item-slots>div {
+  width:65px;
+  height:58px}
+.track-name {
+  bottom:96px}
+.speed-panel {
+  bottom:91px}
+.drive-panel {
+  bottom:85px;
+  width:216px;
+  padding:12px}
+.menu {
+  width:340px;
+  padding:25px}
+.menu h2 {
+  font-size:27px}
+.speed-heading {
+  letter-spacing:1px}
+.timing {
+  width:195px}
+.controls span:nth-child(2) {
+  display:none}
+}
+
+@media(max-width:600px) {
+  .game {
+  min-height:400px}
+.position-panel {
+  top:232px;
+  left:22px}
+.position-number {
+  font-size:43px}
+.position-panel b {
+  font-size:15px}
+.position-panel small {
+  font-size:6px}
+.item-panel {
+  top:304px;
+  left:22px;
+  width:130px;
+  padding:9px}
+.item-panel .eyebrow {
+  font-size:6px}
+.item-panel .eyebrow>span {
+  font-size:6px}
+.item-slots {
+  gap:6px}
+.item-slots>div {
+  height:49px;
+  width:53px}
+.item-slots b {
+  font-size:22px}
+.item-slots small {
+  font-size:6px}
+.menu {
+  width:292px;
+  top:46%;
+  padding:21px}
+.menu>.eyebrow {
+  font-size:6px;
+  letter-spacing:1.2px}
+.menu h2 {
+  font-size:24px;
+  margin-top:14px}
+.menu p {
+  font-size:9px;
+  margin-bottom:17px}
+.mode-buttons button {
+  padding:12px}
+.mode-buttons b {
+  font-size:12px}
+.mode-buttons small {
+  font-size:8px}
+.menu-note {
+  font-size:7px;
+  margin-top:16px}
+.track-name {
+  display:none}
+.speed-panel {
+  width:126px;
+  bottom:183px;
+  right:19px}
+.speed-number>span:first-child {
+  font-size:68px;
+  letter-spacing:-4px}
+.speed-number {
+  gap:8px;
+  height:72px}
+.speed-bars {
+  margin-bottom:0}
+.drive-panel {
+  bottom:119px;
+  width:calc(100% - 44px);
+  padding:10px 12px}
+.drive-heading {
+  margin-bottom:5px;
+  font-size:7px}
+.drift-track {
+  margin-bottom:10px}
+.boost-heading {
+  font-size:7px;
+  margin-bottom:6px}
+.boost-inventory {
+  margin-top:6px}
+.boost-inventory>span {
+  height:18px;
+  width:20px;
+  font-size:14px}
+.touch-controls {
+  bottom:59px;
+  gap:5px}
+.touch-controls button {
+  font-size:10px;
+  height:43px}
+.touch-controls button:nth-child(3) {
+  font-size:7px}
+.touch-controls button:nth-child(4),.touch-controls button:nth-child(5) {
+  font-size:7px}
+.countdown {
+  font-size:80px}
+.race-toast {
+  font-size:10px;
+  top:27%;
+  padding:8px 14px}
+.timing {
+  width:156px}
+.checkpoint-line {
+  font-size:6px;
+  margin-top:12px;
+  padding-top:10px}
+.brand {
+  z-index:1}
+#debug {
+  top:5px;
+  font-size:9px}
+}
+
+@media(max-height:620px) and (min-width:601px) {
+  .map-panel {
+  top:78px;
+  width:150px;
+  padding:11px}
+.map-panel canvas {
+  height:82px}
+.map-panel .eyebrow {
+  font-size:7px;
+  letter-spacing:1px}
+.map-footer {
+  font-size:7px}
+.position-panel {
+  top:252px}
+.position-number {
+  font-size:43px}
+.item-panel {
+  top:327px;
+  width:148px}
+.item-slots>div {
+  height:42px}
+.item-slots b {
+  font-size:19px}
+.item-slots small {
+  font-size:6px}
+.track-name {
+  display:none}
+.drive-panel {
+  bottom:78px}
+.speed-panel {
+  bottom:79px}
+.menu {
+  width:330px;
+  padding:18px 25px;
+  top:48%}
+.menu h2 {
+  font-size:23px;
+  margin:10px 0}
+.menu p {
+  font-size:10px;
+  margin-bottom:14px}
+.mode-buttons button {
+  padding:11px}
+.menu-note {
+  margin-top:12px}
+.brand {
+  top:19px}
+}
+
+
+@media(max-width:600px) {
+  .speed-panel {
+  bottom:224px}
+}
+
