@@ -1,0 +1,32 @@
+const assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/user/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{
+ const browser=await chromium.launch({channel:'msedge',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
+ const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1,isMobile:true,hasTouch:true});
+ const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:4173/');await page.waitForFunction(()=>window.KartRush);
+ await page.screenshot({path:'test-mobile-menu.png'});
+ await page.getByRole('button',{name:/게임 시작/}).tap();await page.locator('#name').fill('모바일');await page.locator('#next').tap();await page.locator('[data-char="5"]').tap();await page.screenshot({path:'test-mobile-character.png'});await page.locator('#choose').tap();await page.locator('[data-mode="speed"]').tap();await page.locator('#race').tap();
+ assert.equal(await page.locator('.touch-controls').isVisible(),true);
+ const controls=['KeyA','KeyD','ShiftLeft','KeyS','KeyW'];for(const code of controls)assert.equal(await page.locator(`[data-touch-hold="${code}"]`).isVisible(),true);
+ await page.waitForFunction(()=>KartRush.state==='RACING');await page.screenshot({path:'test-mobile-race.png'});
+ const cdp=await context.newCDPSession(page);
+ const center=async sel=>{const b=await page.locator(sel).boundingBox();assert.ok(b,sel+' missing');return{x:Math.round(b.x+b.width/2),y:Math.round(b.y+b.height/2)};};
+ const go=await center('[data-touch-hold="KeyW"]'),left=await center('[data-touch-hold="KeyA"]'),drift=await center('[data-touch-hold="ShiftLeft"]');
+ await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...go,id:1}]});await page.waitForTimeout(1300);
+ const accelerating=await page.evaluate(()=>KartRush.racers[0]);assert.ok(accelerating.speed>5,'GO button did not accelerate');
+ await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...go,id:1},{...left,id:2}]});
+ await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...go,id:1},{...left,id:2},{...drift,id:3}]});
+ await page.waitForTimeout(700);const drifting=await page.evaluate(()=>KartRush.racers[0]);assert.equal(drifting.drifting,true);assert.ok(Math.abs(drifting.lateralVelocity)>1);
+ await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await page.waitForTimeout(150);assert.equal((await page.evaluate(()=>KartRush.racers[0])).drifting,false);
+ await page.locator('[data-touch-action="pause"]').tap();assert.equal(await page.evaluate(()=>KartRush.state),'PAUSED');const before=await page.evaluate(()=>KartRush.elapsed);await page.waitForTimeout(300);assert.equal(await page.evaluate(()=>KartRush.elapsed),before);await page.locator('#resume').tap();assert.equal(await page.evaluate(()=>KartRush.state),'RACING');
+ await page.locator('[data-touch-action="reset"]').tap();assert.equal(await page.evaluate(()=>KartRush.state),'RACING');
+ await page.screenshot({path:'test-mobile-race.png'});
+ assert.deepEqual(errors,[]);console.log('MOBILE SPEED PASS',{speed:accelerating.speed,drift:drifting.lateralVelocity});
+ await page.locator('[data-touch-action="pause"]').tap();await page.locator('#quit').tap();await page.locator('#start').tap();await page.locator('#next').tap();await page.locator('#choose').tap();await page.locator('[data-mode="item"]').tap();await page.locator('#race').tap();assert.equal(await page.locator('[data-touch-action="special"]').getAttribute('aria-label'),'아이템 사용');
+ await page.waitForFunction(()=>KartRush.state==='RACING');await page.locator('[data-touch-action="special"]').tap();assert.deepEqual(errors,[]);console.log('MOBILE ITEM PASS');
+ const landscape=await browser.newContext({viewport:{width:844,height:390},deviceScaleFactor:1,isMobile:true,hasTouch:true});const wide=await landscape.newPage();wide.on('pageerror',e=>errors.push(e.message));await wide.goto('http://127.0.0.1:4173/');await wide.waitForFunction(()=>window.KartRush);await wide.locator('#start').tap();await wide.locator('#name').fill('가로화면');await wide.locator('#next').tap();await wide.locator('#choose').tap();await wide.locator('#race').tap();await wide.waitForFunction(()=>KartRush.state==='RACING');await wide.screenshot({path:'test-mobile-landscape.png'});
+ for(const selector of ['[data-touch-hold="KeyA"]','[data-touch-hold="KeyD"]','[data-touch-hold="ShiftLeft"]','[data-touch-hold="KeyW"]','[data-touch-hold="KeyS"]','[data-touch-action="special"]'])assert.equal(await wide.locator(selector).isVisible(),true);
+ const pads=await Promise.all(['KeyA','KeyD','ShiftLeft','KeyW','KeyS'].map(code=>wide.locator(`[data-touch-hold="${code}"]`).boundingBox()));for(let i=0;i<pads.length;i++)for(let j=i+1;j<pads.length;j++){const a=pads[i],b=pads[j];assert.ok(a.x+a.width<=b.x||b.x+b.width<=a.x||a.y+a.height<=b.y||b.y+b.height<=a.y,'landscape controls overlap');}
+ assert.deepEqual(errors,[]);console.log('MOBILE LANDSCAPE PASS');await landscape.close();await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
