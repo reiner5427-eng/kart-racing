@@ -41,6 +41,7 @@ function profileValue(value: unknown): Profile | null {
   const profile = value as Record<string, unknown>;
   if (typeof profile.name !== 'string' || typeof profile.characterId !== 'string') return null;
   const name = profile.name.trim();
+  if (/세무냥이|리트냥이|편입냥이|충주냥이|7급냥이|한전냥이|작수냥이|엠딧냥이|관세냥이|감평냥이/u.test(name.normalize('NFKC').toLowerCase().replace(/[\s\p{Cf}\p{M}_-]/gu, '').normalize('NFKC'))) return null;
   if (!/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]{1,12}$/.test(name) || !CHARACTERS.has(profile.characterId)) return null;
   return { name, characterId: profile.characterId };
 }
