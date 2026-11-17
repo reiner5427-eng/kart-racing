@@ -12,7 +12,7 @@ function response(body: object, status = 200): Response {
 }
 
 function storeFor() {
-  return getStore({ name: 'kart-rush-hall', consistency: 'strong' });
+  return getStore({ name: 'kart-rush-hall-v2', consistency: 'strong' });
 }
 
 type RecordStore = ReturnType<typeof storeFor>;
