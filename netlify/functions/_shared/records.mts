@@ -31,7 +31,7 @@ export function validateRecord(input: unknown): RecordEntry {
   if (typeof value.id !== 'string' || !/^[a-zA-Z0-9-]{8,80}$/.test(value.id)) throw new Error('기록 ID가 올바르지 않습니다.');
   if (typeof value.playerName !== 'string') throw new Error('이름이 올바르지 않습니다.');
   const playerName = value.playerName.trim();
-  if (/세무냥이|리트냥이|편입냥이|충주냥이|7급냥이|한전냥이|작수냥이|엠딧냥이|관세냥이|감평냥이|노안|예일리언|에일리언|야르|왜|잼민|응우엔|응우옌|응우|장애|게이/u.test(playerName.normalize('NFKC').toLowerCase().replace(/[\s\p{Cf}\p{M}_-]/gu, '').normalize('NFKC'))) throw new Error('사용할 수 없는 닉네임입니다.');
+  if (/세무냥이|리트냥이|편입냥이|충주냥이|7급냥이|한전냥이|작수냥이|엠딧냥이|관세냥이|감평냥이|노안|예일리언|에일리언|야르|왜|잼민|응우엔|응우옌|응우|장애|게이|사랑해|죽|니거|니그로|돼지|섹시|울트라|씹/u.test(playerName.normalize('NFKC').toLowerCase().replace(/[\s\p{Cf}\p{M}_-]/gu, '').normalize('NFKC'))) throw new Error('사용할 수 없는 닉네임입니다.');
   if (!/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]{1,12}$/.test(playerName)) throw new Error('이름은 한글·영문·숫자 12자 이하여야 합니다.');
   if (typeof value.characterId !== 'string' || !Object.hasOwn(CHARACTERS, value.characterId)) throw new Error('캐릭터가 올바르지 않습니다.');
   if (value.mode !== 'speed' && value.mode !== 'item') throw new Error('게임 모드가 올바르지 않습니다.');
