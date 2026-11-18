@@ -1,6 +1,6 @@
 import type { Context, Config } from '@netlify/functions';
 import { getStore } from '@netlify/blobs';
-import { MAX_ENTRIES, rankRecords, validateRecord, type RecordEntry } from './_shared/records.mts';
+import { MAX_ENTRIES, matchesRemovedNickname, rankRecords, validateRecord, type RecordEntry } from './_shared/records.mts';
 
 export const config: Config = { path: '/api/leaderboard' };
 
@@ -23,7 +23,8 @@ async function allRecords(store: RecordStore): Promise<RecordEntry[]> {
   for (let index = 0; index < blobs.length; index += 20) {
     const batch = await Promise.all(blobs.slice(index, index + 20).map(blob => store.get(blob.key, { type: 'json' })));
     for (const item of batch) {
-      if (item && typeof item === 'object' && typeof item.id === 'string' && typeof item.bestLapTime === 'number') records.push(item as RecordEntry);
+      if (item && typeof item === 'object' && typeof item.id === 'string' && typeof item.bestLapTime === 'number' &&
+          !matchesRemovedNickname(item.playerName)) records.push(item as RecordEntry);
     }
   }
   return rankRecords(records);
@@ -44,6 +45,7 @@ export async function handleRequest(request: Request, store: RecordStore): Promi
   catch (error) { return response({ error: error instanceof Error ? error.message : '기록이 올바르지 않습니다.' }, 400); }
   const key = `records/${record.id}`;
   const prior = await store.get(key, { type: 'json' });
+  if (prior && matchesRemovedNickname(prior.playerName)) return response({ error: '이미 사용된 기록 ID입니다.' }, 409);
   if (!prior) await store.setJSON(key, record);
   const records = await allRecords(store);
   const rank = records.findIndex(item => item.id === record.id) + 1;
