@@ -36,11 +36,16 @@ function tokenValue(value: unknown): value is string {
   return typeof value === 'string' && /^[a-f0-9-]{20,80}$/i.test(value);
 }
 
+function hasLatinNickname(name: unknown): boolean {
+  return typeof name === 'string' && /(?=\p{L})\p{Script=Latin}/u.test(name.normalize('NFKC'));
+}
+
 function profileValue(value: unknown): Profile | null {
   if (!value || typeof value !== 'object') return null;
   const profile = value as Record<string, unknown>;
   if (typeof profile.name !== 'string' || typeof profile.characterId !== 'string') return null;
   const name = profile.name.trim();
+  if (hasLatinNickname(name)) return null;
   if (/세무냥이|리트냥이|편입냥이|충주냥이|7급냥이|한전냥이|작수냥이|엠딧냥이|관세냥이|감평냥이|노안|예일리언|에일리언|야르|왜|잼민|응우엔|응우옌|응우|장애|게이|사랑해|죽|니거|니그로|돼지|섹시|울트라|씹|몸무게|돼|당뇨|역류|불|주먹|스마트|안경|도둑|빡/u.test(name.normalize('NFKC').toLowerCase().replace(/[\s\p{Cf}\p{M}_-]/gu, '').normalize('NFKC'))) return null;
   if (!/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]{1,12}$/.test(name) || !CHARACTERS.has(profile.characterId)) return null;
   return { name, characterId: profile.characterId };

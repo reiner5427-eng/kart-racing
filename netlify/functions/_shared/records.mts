@@ -26,12 +26,16 @@ const MIN_LAP_MS = 12_000;
 const MAX_LAP_MS = 30 * 60_000;
 const REMOVED_NICKNAME = /돼|당뇨|역류|불|주먹|스마트|안경|도둑|빡/u;
 
+function hasLatinNickname(name: unknown): boolean {
+  return typeof name === 'string' && /(?=\p{L})\p{Script=Latin}/u.test(name.normalize('NFKC'));
+}
+
 function compactNickname(name: string): string {
   return name.normalize('NFKC').toLowerCase().replace(/[\s\p{Cf}\p{M}_-]/gu, '').normalize('NFKC');
 }
 
 export function matchesRemovedNickname(name: unknown): boolean {
-  return typeof name === 'string' && REMOVED_NICKNAME.test(compactNickname(name));
+  return typeof name === 'string' && (hasLatinNickname(name) || REMOVED_NICKNAME.test(compactNickname(name)));
 }
 
 export function validateRecord(input: unknown): RecordEntry {
@@ -40,9 +44,10 @@ export function validateRecord(input: unknown): RecordEntry {
   if (typeof value.id !== 'string' || !/^[a-zA-Z0-9-]{8,80}$/.test(value.id)) throw new Error('기록 ID가 올바르지 않습니다.');
   if (typeof value.playerName !== 'string') throw new Error('이름이 올바르지 않습니다.');
   const playerName = value.playerName.trim();
+  if (hasLatinNickname(playerName)) throw new Error('영문자가 포함된 닉네임은 사용할 수 없습니다.');
   const compact = compactNickname(playerName);
   if (/세무냥이|리트냥이|편입냥이|충주냥이|7급냥이|한전냥이|작수냥이|엠딧냥이|관세냥이|감평냥이|노안|예일리언|에일리언|야르|왜|잼민|응우엔|응우옌|응우|장애|게이|사랑해|죽|니거|니그로|돼지|섹시|울트라|씹|몸무게/u.test(compact) || REMOVED_NICKNAME.test(compact)) throw new Error('사용할 수 없는 닉네임입니다.');
-  if (!/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]{1,12}$/.test(playerName)) throw new Error('이름은 한글·영문·숫자 12자 이하여야 합니다.');
+  if (!/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]{1,12}$/.test(playerName)) throw new Error('이름은 영문자 없이 한글·숫자 12자 이하여야 합니다.');
   if (typeof value.characterId !== 'string' || !Object.hasOwn(CHARACTERS, value.characterId)) throw new Error('캐릭터가 올바르지 않습니다.');
   if (value.mode !== 'speed' && value.mode !== 'item') throw new Error('게임 모드가 올바르지 않습니다.');
   if (!Array.isArray(value.lapTimes) || value.lapTimes.length !== 3 ||
