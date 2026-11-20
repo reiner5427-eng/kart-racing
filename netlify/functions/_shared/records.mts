@@ -24,7 +24,7 @@ const CHARACTERS: Record<string, string> = {
 export const MAX_ENTRIES = 10;
 const MIN_LAP_MS = 12_000;
 const MAX_LAP_MS = 30 * 60_000;
-const REMOVED_NICKNAME = /돼|당뇨|역류|불|주먹|스마트|안경|도둑|빡/u;
+const REMOVED_NICKNAME = /돼|당뇨|역류|불|주먹|스마트|안경|도둑|빡|김대중|엄|줴/u;
 
 function hasLatinNickname(name: unknown): boolean {
   return typeof name === 'string' && /(?=\p{L})\p{Script=Latin}/u.test(name.normalize('NFKC'));
